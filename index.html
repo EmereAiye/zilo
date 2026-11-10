@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zilo | Design • Try • Tailor</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="splash">
+  <div class="spBox">
+    <img id="spLogo" alt="Zilo">
+    <div class="spWords"><span>DESIGN</span><i></i><span>TRY</span><i></i><span>TAILOR</span></div>
+    <div class="spStage" id="spStage"></div>
+  </div>
+  <div id="spHint">Tap to begin</div>
+</div>
+
+<div id="bgArt" aria-hidden="true"><i></i><i></i><i></i></div>
+
+<header class="top">
+  <div class="logoWrap"><img class="logo" alt="Zilo: Design, Try, Tailor"></div>
+  <nav id="nav"></nav>
+</header>
+
+<main>
+  <section id="home" class="page on">
+    <div class="hero">
+      <div class="heroTxt">
+        <span class="eyebrow">Fashion is art · Nigeria · Ghana · Benin</span>
+        <h1>Design it.<br>Try it.<br>Tailor it.</h1>
+        <p>Build your outfit on a 360° mannequin, see exactly how much fabric you need, then meet a verified master tailor near you.</p>
+        <div class="row">
+          <button class="btn" data-go="studio">Start designing</button>
+          <button class="btn ghost" data-go="scanner">Scan my fabric</button>
+        </div>
+        <div class="seg region" id="region">
+          <button data-r="ng" class="on">🇳🇬 Nigeria</button>
+          <button data-r="gh">🇬🇭 Ghana</button>
+          <button data-r="bj">🇧🇯 Benin Republic</button>
+        </div>
+      </div>
+      <div class="heroStage"><span class="fl f1"></span><span class="fl f2"></span><span class="fl f3"></span><span class="fl f4"></span><canvas id="heroCv"></canvas></div>
+    </div>
+    <div class="trust">
+      <div><b>360°</b><span>3D try-on</span></div>
+      <div><b>CAC</b><span>verified tailors</span></div>
+      <div><b>0%</b><span>fabric wastage</span></div>
+      <div><b>Meet first</b><span>pay later</span></div>
+    </div>
+    <h2>Trending this season</h2>
+    <div class="grid" id="trend"></div>
+    <h2>How Zilo works</h2>
+    <div class="grid steps">
+      <div class="card"><i>01</i><h3>Design</h3><p>Pick a mannequin, garment, fabric and colour. Watch it change live.</p></div>
+      <div class="card"><i>02</i><h3>Try</h3><p>Upload your own fabric photo and see it draped on the outfit.</p></div>
+      <div class="card"><i>03</i><h3>Tailor</h3><p>Get exact yardage, then find a verified tailor and meet before you pay.</p></div>
+    </div>
+  </section>
+
+  <section id="studio" class="page">
+    <div class="split">
+      <aside class="panel" id="sPanel">
+        <h2>3D Design Studio</h2>
+        <label>Mannequin</label><div class="seg" id="sGender"></div>
+        <button class="btn ghost" id="editMQ" type="button">Edit my mannequin</button>
+        <label>Outfit</label><div class="seg tiles" id="sOutfit"></div>
+        <label>Edit part <small>(or tap it on the mannequin)</small></label><div class="seg" id="sPart"></div>
+        <label>Pattern for this part</label><div class="seg tiles" id="sPat"></div>
+        <div class="two">
+          <div><label>Colour 1</label><input type="color" id="sC1"><div class="seg swatches" id="sSw1"></div></div>
+          <div id="sC2wrap"><label>Colour 2</label><input type="color" id="sC2"><div class="seg swatches" id="sSw2"></div></div>
+        </div>
+        <label>Trim craft</label><div class="seg" id="sCraft"></div>
+        <label>Mannequin finish</label><div class="seg" id="sFinish"></div>
+        <label>Lighting</label><div class="seg" id="sLight"></div>
+        <div class="row"><button class="btn" id="saveDesign">Save to my vault</button>
+        <button class="btn ghost" id="shareDesign">Send to tailor</button></div>
+      </aside>
+      <div class="stage"><canvas id="studioCv"></canvas><span class="hint">Drag to rotate 360°</span></div>
+    </div>
+  </section>
+
+  <section id="scanner" class="page">
+    <div class="split">
+      <aside class="panel" id="scPanel">
+        <h2>Dress Scanner</h2>
+        <div class="seg" id="scMode"></div>
+        <p class="note" id="scNote">Upload a photo of unsewn fabric (Ankara, Kente, Aso Oke, Lace). It wraps onto the garment.</p>
+        <input type="file" id="scFile" accept="image/*">
+        <label>Mannequin</label><div class="seg" id="scGender"></div>
+        <label>Outfit</label><div class="seg tiles" id="scOutfit"></div>
+        <label>Pattern scale</label><input type="range" id="scScale" min="1" max="8" step="0.5" value="3">
+        <label>Alignment</label><input type="range" id="scRot" min="0" max="180" value="0">
+      </aside>
+      <div class="stage"><canvas id="scanCv"></canvas><span class="hint" id="scHint">Upload a fabric photo to begin</span></div>
+    </div>
+  </section>
+
+  <section id="yardage" class="page">
+    <div class="panel wide">
+      <h2>Body &amp; Yardage Calculator</h2>
+      <div class="fields">
+        <div><label>Chest (in)</label><input type="number" id="yChest" value="40"></div>
+        <div><label>Shoulder (in)</label><input type="number" id="yShoulder" value="18"></div>
+        <div><label>Waist (in)</label><input type="number" id="yWaist" value="34"></div>
+        <div><label>Height (in)</label><input type="number" id="yHeight" value="70"></div>
+        <div><label>Preferred length (in)</label><input type="number" id="yLen" value="45"></div>
+        <div><label>Outfit</label>
+          <select id="yStyle">
+            <option value="agbada3">3-Piece Agbada</option><option value="senator2">2-Piece Senator</option>
+            <option value="kaftan1">Kaftan</option><option value="gown1">Corset Gown</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn" id="yCalc">Calculate fabric</button>
+      <div id="yOut" class="result"></div>
+    </div>
+  </section>
+
+  <section id="radar" class="page">
+    <div class="split">
+      <aside class="panel">
+        <h2>Tailor Radar</h2>
+        <label>Minimum rating</label>
+        <select id="rRating"><option value="0">Any</option><option value="4.5">★ 4.5+</option><option value="4.8">★ 4.8+ Master</option></select>
+        <label>Specialty</label>
+        <select id="rSpec"><option value="">All</option><option>Traditional</option><option>Suits</option><option>Women's Wear</option></select>
+        <div id="tList"></div>
+      </aside>
+      <div class="stage"><div id="map"></div></div>
+    </div>
+  </section>
+
+  <section id="vault" class="page">
+    <div class="panel wide">
+      <h2>Design Vault</h2>
+      <h3>Saved designs</h3><div class="grid" id="vDesigns"></div>
+      <h3>Pinned tailors</h3><div class="grid" id="vPins"></div>
+      <h3>Measurements</h3>
+      <p class="note">Your last calculator inputs are saved here automatically.</p>
+      <pre id="vMeas" class="result"></pre>
+    </div>
+  </section>
+
+  <section id="portal" class="page">
+    <div class="panel wide">
+      <h2>Tailor Lookbook &amp; Workshop Portal</h2>
+      <div class="fields">
+        <div><label>Business name</label><input id="pName"></div>
+        <div><label>Workshop address</label><input id="pAddr"></div>
+        <div><label>CAC / business registration document</label><input type="file" id="pCac"></div>
+        <div><label>Portfolio photos</label><input type="file" id="pPhotos" multiple accept="image/*"></div>
+      </div>
+      <button class="btn" id="pSave">Submit for verification</button>
+      <div class="grid" id="pGallery"></div>
+      <div class="stats">
+        <div><b>—</b>Profile views (coming soon)</div><div><b id="pinCount">0</b>Pins</div><div><b>—</b>Reviews (coming soon)</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="tdash" class="page">
+    <div class="panel wide">
+      <h2 id="tdTitle">Your tailor dashboard</h2>
+      <p class="note" id="tdStatus"></p>
+      <div class="stats"><div><b id="tdV">Pending</b>Verification</div><div><b>—</b>Client requests (coming soon)</div><div><b>—</b>Reviews (coming soon)</div></div>
+      <h3>Get verified in 4 steps</h3>
+      <div class="grid steps" id="tdSteps"></div>
+      <button class="btn" data-go="portal">Open Workshop &amp; Lookbook</button>
+    </div>
+  </section>
+
+  <section id="admin" class="page">
+    <div class="panel wide">
+      <h2>Owner dashboard</h2>
+      <div class="stats" id="adStats"></div>
+      <h3>Tailors</h3>
+      <div id="adTailors"></div>
+      <h3>3D garment models</h3>
+      <p class="note">Upload a .glb made by your 3D designer. Name the parts inside it like the guide (robe_, trim_ ...). "Try in Studio" previews it on your phone without uploading.</p>
+      <div class="fields">
+        <div><label>Mannequin</label><select id="gmG"><option value="m">Male</option><option value="f">Female</option></select></div>
+        <div><label>Outfit</label><select id="gmO"></select></div>
+        <div><label>Name</label><input id="gmN" maxlength="60"></div>
+        <div><label>Model file (.glb)</label><input type="file" id="gmF" accept=".glb"></div>
+        <div><label>Scale (blank = automatic)</label><input id="gmS" type="number" step="0.01"></div>
+        <div><label>Fabric repeat (x, y)</label><div class="two"><input id="gmRx" type="number" value="2" step="0.5"><input id="gmRy" type="number" value="2" step="0.5"></div></div>
+      </div>
+      <div class="row"><button class="btn ghost" id="gmTry" type="button">Try in Studio</button><button class="btn" id="gmUp" type="button">Upload for everyone</button></div>
+      <div id="gmList"></div>
+    </div>
+  </section>
+
+  <section id="ideas" class="page">
+    <div class="panel wide">
+      <h2>Style Ideas for you</h2>
+      <p class="note">Zilo creates 5 outfits on your mannequin. Tap one to bring it to the front, then use it in the Studio to edit every part.</p>
+      <div class="seg" id="idMode"></div>
+      <div class="seg" id="idGender" style="margin-top:.6rem"></div>
+      <div class="seg" id="idFilter" style="margin-top:.6rem"></div>
+      <div class="cflow" id="cflow"><p class="note" style="text-align:center;padding-top:4rem">Creating your styles…</p></div>
+      <div class="idTitle" id="idTitle"></div>
+      <div id="aiBox" style="display:none"><label>Extra wishes for the AI (optional)</label><input id="aiNotes" maxlength="200" placeholder="e.g. add a gold pocket square"><p class="note" id="aiMsg" role="status">AI pictures are made from the 3D style you selected in "3D styles".</p></div>
+      <div class="row" style="justify-content:center">
+        <button class="btn" id="idUse" type="button">Use in Studio</button>
+        <button class="btn ghost" id="idSave" type="button">♥ Save</button>
+        <button class="btn ghost" id="idSend" type="button" style="display:none">Send to tailor</button>
+        <button class="btn ghost" id="idMore" type="button">Show 5 more</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="modal" id="loginM">
+  <div class="box">
+    <div class="logoWrap big"><img class="logo" alt="Zilo"></div>
+    <div class="seg" id="aMode"><button class="on" data-v="in">Sign in</button><button data-v="up">Create account</button></div>
+    <div id="upOnly">
+      <label>Your name</label><input id="lName" autocomplete="name">
+      <label>I am</label>
+      <div class="seg" id="lGender"><button class="on" data-v="m">Male</button><button data-v="f">Female</button></div>
+    </div>
+    <label>Email</label><input id="lEmail" type="email" autocomplete="email">
+    <label>Password (6+ characters)</label><input id="lPass" type="password" autocomplete="current-password">
+    <p class="note" id="aMsg" role="status"></p>
+    <button class="btn" id="lGo">Sign in</button>
+  </div>
+</div>
+
+<div class="modal" id="roleM">
+  <div class="box wideBox">
+    <h2>How will you use Zilo?</h2>
+    <p class="note">Pick the one that fits. This can't be changed later.</p>
+    <div class="roleGrid">
+      <button class="roleCard" data-r="client"><i>🧵</i><b>I want something sewn</b><span>Design outfits, get exact fabric yardage and meet a verified tailor.</span></button>
+      <button class="roleCard" data-r="tailor"><i>✂️</i><b>I'm a tailor</b><span>Show your work, get verified with your CAC and receive clients.</span></button>
+    </div>
+    <p class="note" id="roleMsg" role="status"></p>
+  </div>
+</div>
+
+<div class="modal" id="mqM">
+  <div class="box wideBox">
+    <h2>Create your mannequin</h2>
+    <p class="note">This is the model your outfits are tried on.</p>
+    <div id="mqChoose">
+      <div class="roleGrid three">
+        <button class="roleCard" data-m="own" type="button"><i>🎛️</i><b>Build my own</b><span>Set your height, build and skin tone.</span></button>
+        <button class="roleCard" data-m="ai" type="button"><i>✨</i><b>AI mannequin</b><span>A picture made from your settings.</span><em class="soon">New</em></button>
+        <button class="roleCard" data-m="photo" type="button"><i>📸</i><b>From my photo</b><span>A mannequin that looks like you.</span><em class="soon">New</em></button>
+      </div>
+    </div>
+    <div id="mqBuild" style="display:none">
+      <div class="mqWrap">
+        <div class="mqStage"><canvas id="mqCv"></canvas></div>
+        <div class="mqCtl">
+          <label>Mannequin</label><div class="seg" id="mqGender"></div>
+          <label>Height <b id="mqHv"></b></label><input type="range" id="mqH" min="150" max="190" value="168">
+          <label>Build</label><input type="range" id="mqB" min="85" max="125" value="100">
+          <label>Skin tone or finish</label><div class="seg swatches" id="mqTone"></div>
+          <label>AI picture of my mannequin (optional)</label>
+          <button class="btn ghost" id="mqAiDesc" type="button">✨ Create from my settings</button>
+          <details id="mqPhotoBox"><summary>Use my own photo instead</summary>
+            <label class="chk"><input type="checkbox" id="mqConsent"> I am 18 or older and this is my own photo. I agree that Zilo uses it once to make my AI picture. The photo is deleted straight after.</label>
+            <input type="file" id="mqPhoto" accept="image/*">
+            <button class="btn ghost" id="mqAiPhoto" type="button">✨ Create from my photo</button>
+          </details>
+          <img id="mqLookImg" class="lookImg" alt="Your AI picture" hidden>
+          <button class="linkBtn" id="mqLookDel" type="button" hidden>Remove my AI picture</button>
+          <p class="note" id="mqAiMsg" role="status"></p>
+          <div class="row"><button class="btn" id="mqSave" type="button">Save my mannequin</button><button class="btn ghost" id="mqBack" type="button">Back</button></div>
+        </div>
+      </div>
+    </div>
+    <button class="linkBtn" id="mqSkip" type="button">Skip for now</button>
+  </div>
+</div>
+
+<div class="modal" id="safeM">
+  <div class="box">
+    <h2>Safety notice</h2>
+    <p>Always schedule an initial in-person or workshop visit before making payments. Inspect fabric samples, take physical measurements, and confirm tailor CAC credentials first.</p>
+    <label class="chk"><input type="checkbox" id="safeChk"> I understand and will meet first, pay later.</label>
+    <button class="btn" id="safeGo" disabled>Continue</button>
+  </div>
+</div>
+
+<button id="themeBtn" type="button" aria-label="Change colours">🎨</button>
+<div id="themePop"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
